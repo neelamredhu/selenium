@@ -6,6 +6,7 @@
 **As a Xero User, In order to manage my business successfully, I want to be able to add an “ANZ (NZ)” bank account inside any Xero Organisation.**
 
 ####Prerequisite 
+
      * Windows
      * Java is installed
      * Maven is installed and is in added into Path environment variable
