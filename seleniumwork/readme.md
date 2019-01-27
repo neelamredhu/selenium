@@ -12,29 +12,32 @@
  
 #### Steps to run the test case
 
-* Clone the 
+Step 1: Clone the Git repository
 
-* Below dependencies need to be included in Maven project.
+```
+	git clone https://github.com/neelamredhu/selenium.git
+```
+Step 2: Go to the seleniumwork folder 
 
-```xml
-<dependency>
-    <groupId>org.seleniumhq.selenium</groupId>
-    <artifactId>selenium-java</artifactId>
-    <version>3.141.59</version>
-</dependency>
+```
+cd seleniumwork
 
-<dependency>
-    <groupId>org.seleniumhq.selenium</groupId>
-    <artifactId>selenium-chrome-driver</artifactId>
-    <version>3.141.59</version>
-</dependency>
+```
 
+Step 3: Run maven clean compile to clean the maven project and compile it
 
-<dependency>
-    <groupId>org.testng</groupId>
-    <artifactId>testng</artifactId>
-    <version>6.14.3</version>
-    <scope>test</scope>
-</dependency>
+```
+	mvn clean compile
+```
 
+Step 4: Then run maven test goal
+
+```
+	mvn test
+```
+
+Step 5: Test report can be found at below location
+
+```
+	<your location>\seleniumwork\target\surefire-reports\index.html
 ```

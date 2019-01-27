@@ -7,6 +7,7 @@
         <methods>
           <include name="addingBankAccountTest"/>
           <include name="setup"/>
+          <include name="cleanup"/>
         </methods>
       </class> <!-- seleniumwork.MySeleniumTest -->
     </classes>

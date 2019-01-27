@@ -8,6 +8,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -23,23 +25,9 @@ public class MySeleniumTest {
 		webDriver.manage().window().maximize();
 	}
 	
-	@Test
-	public void testGenerateTwoFactorCode() {
-		String otpKeyStr = "LJKGE52QMFFVCQ3LNJYDOZSQJE"; // <- this 2FA secret key.
-
-		Totp totp = new Totp(otpKeyStr);
-		String twoFactorCode = totp.now(); // <- got 2FA coed at this time!
-		System.out.println(twoFactorCode);
-	}
-	
-	
-	public String generateTwoFactorCode() {
-		String otpKeyStr = "LJKGE52QMFFVCQ3LNJYDOZSQJE"; // <- this 2FA secret key.
-		Totp totp = new Totp(otpKeyStr);
-		String twoFactorCode = totp.now(); // <- got 2FA coed at this time!
-		System.out.println(twoFactorCode);
-		
-		return twoFactorCode;
+	@AfterTest
+	public void cleanup() {
+		webDriver.quit();
 	}
 	
 	@Test
@@ -93,7 +81,6 @@ public class MySeleniumTest {
 		webDriver.findElement(By.id("branchnumber-1045-inputEl")).sendKeys(bsb);
 		webDriver.findElement(By.id("accountnumber-1046-inputEl")).sendKeys(accountNumber);
 
-		/*
 		//Click the continue button to add the account.
 		webDriver.findElement(By.id("common-button-submit-1015-btnInnerEl")).click();
 		
@@ -103,6 +90,15 @@ public class MySeleniumTest {
 		String accountCreatedText = webDriver.findElement(By.xpath("/html[1]/body[1]/div[2]/form[1]/div[1]/div[1]/div[1]/div[1]/p[1]")).getText();
 		
 		Assert.assertEquals(accountCreatedText, accountName+" has been added.");
-		*/
+
+	}
+	
+	public String generateTwoFactorCode() {
+		String otpKeyStr = "LJKGE52QMFFVCQ3LNJYDOZSQJE"; // <- this 2FA secret key.
+		Totp totp = new Totp(otpKeyStr);
+		String twoFactorCode = totp.now(); // <- got 2FA coed at this time!
+		System.out.println(twoFactorCode);
+		
+		return twoFactorCode;
 	}
 }
