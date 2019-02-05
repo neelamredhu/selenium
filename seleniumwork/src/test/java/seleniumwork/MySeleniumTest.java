@@ -1,6 +1,7 @@
 package seleniumwork;
 
-import org.jboss.aerogear.security.otp.Totp;
+import java.util.HashMap;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -9,37 +10,44 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 public class MySeleniumTest {
 	
 	public WebDriver webDriver;
+	private TestUtils testUtils;
+	HashMap<String, String> prop = null;
 	
-	@BeforeTest
-	public void setup() {
+	@BeforeSuite
+	public void initialization() {
 		System.setProperty("webdriver.chrome.driver", "BrowserDrivers/chromedriver.exe");
-		
 		webDriver = new ChromeDriver();
 		webDriver.manage().window().maximize();
+		
+		//Instantiating TestUtils
+		testUtils = new TestUtils();
+		
+		//Loading properties into a HashMap
+		prop = testUtils.loadProperties();
 	}
 	
-	@AfterTest
+	@AfterSuite
 	public void cleanup() {
 		webDriver.quit();
 	}
 	
 	@Test
 	public void addingBankAccountTest() {
-		String twoFactorCode = generateTwoFactorCode();
+		String twoFactorCode = testUtils.generateTwoFactorCode();
 		
 		//Step1: Go to the login page
 		webDriver.get("https://login.xero.com/");
 		
 		//Step2: Enter credentials and submit
-		webDriver.findElement(By.id("email")).sendKeys("neelam.redhu@gmail.com");
-		webDriver.findElement(By.id("password")).sendKeys("Xero@123");
+		webDriver.findElement(By.id("email")).sendKeys(prop.get("xero.login.username"));
+		webDriver.findElement(By.id("password")).sendKeys(prop.get("xero.login.passwd"));
 		webDriver.findElement(By.id("submitButton")).click();
 		
 		//Step3: Enter two factor code and submit		
@@ -93,12 +101,10 @@ public class MySeleniumTest {
 
 	}
 	
-	public String generateTwoFactorCode() {
-		String otpKeyStr = "LJKGE52QMFFVCQ3LNJYDOZSQJE"; // <- this 2FA secret key.
-		Totp totp = new Totp(otpKeyStr);
-		String twoFactorCode = totp.now(); // <- got 2FA coed at this time!
-		System.out.println(twoFactorCode);
-		
-		return twoFactorCode;
-	}
+//	@Test
+//	public void testTestUtils() {
+//		testUtils = new TestUtils();
+//		testUtils.loadPropertyTest();
+//	}
+
 }
