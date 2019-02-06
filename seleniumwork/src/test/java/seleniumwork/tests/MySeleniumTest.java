@@ -1,4 +1,4 @@
-package seleniumwork;
+package seleniumwork.tests;
 
 import java.util.HashMap;
 
@@ -18,7 +18,7 @@ public class MySeleniumTest {
 	
 	public WebDriver webDriver;
 	private TestUtils testUtils;
-	HashMap<String, String> prop = null;
+	private HashMap<String, String> prop = null;
 	
 	@BeforeSuite
 	public void initialization() {
@@ -38,17 +38,12 @@ public class MySeleniumTest {
 		webDriver.quit();
 	}
 	
+	
 	@Test
 	public void addingBankAccountTest() {
 		String twoFactorCode = testUtils.generateTwoFactorCode();
 		
-		//Step1: Go to the login page
-		webDriver.get("https://login.xero.com/");
-		
-		//Step2: Enter credentials and submit
-		webDriver.findElement(By.id("email")).sendKeys(prop.get("xero.login.username"));
-		webDriver.findElement(By.id("password")).sendKeys(prop.get("xero.login.passwd"));
-		webDriver.findElement(By.id("submitButton")).click();
+		loginToXero(webDriver);
 		
 		//Step3: Enter two factor code and submit		
 		WebDriverWait driverWait = new WebDriverWait(webDriver, 30);
@@ -101,10 +96,22 @@ public class MySeleniumTest {
 
 	}
 	
-//	@Test
+	
+	public void loginToXero(WebDriver webDriver) {
+		//Step1: Go to the login page
+		webDriver.get("https://login.xero.com/");
+		
+		//Step2: Enter credentials and submit
+		webDriver.findElement(By.id("email")).sendKeys(prop.get("xero.login.username"));
+		webDriver.findElement(By.id("password")).sendKeys(prop.get("xero.login.passwd"));
+		webDriver.findElement(By.id("submitButton")).click();
+
+	}
+
+	//	@Test
 //	public void testTestUtils() {
 //		testUtils = new TestUtils();
-//		testUtils.loadPropertyTest();
+//		testUtils.generateTwoFactorCode();
 //	}
 
 }

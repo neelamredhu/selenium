@@ -1,4 +1,4 @@
-package seleniumwork;
+package seleniumwork.tests;
 
 import java.io.FileInputStream;
 import java.util.HashMap;
